@@ -10,12 +10,21 @@ class App extends Component {
     this.state = {
       monsters: [],
       searchField: "",
+      title: ''
     };
   }
 
-  handleChange = (e, keyState) => {
-    this.setState({ [keyState]: e.target.value });
+  _handleChange = (e, keyState) => {
+    const newTitle = `Monster Rolodex - ${e.target.value}`;
+    this.setState({ [keyState]: e.target.value, title: newTitle });
   };
+
+  get handleChange() {
+    return this._handleChange;
+  }
+  set handleChange(value) {
+    this._handleChange = value;
+  }
 
   componentDidMount() {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -31,7 +40,7 @@ class App extends Component {
 
     return (
       <div className="App">
-      <h1>Monster search</h1>
+        <h1>Monster search</h1>
         <SearchBox
           placeholder="Search Monsters"
           handleChange={(e) => this.handleChange(e, "searchField")}
